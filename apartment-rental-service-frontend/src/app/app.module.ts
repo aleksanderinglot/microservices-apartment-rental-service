@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { ApartmentListComponent } from './apartment-list/apartment-list.component';
 import { ApartmentItemComponent } from './apartment-item/apartment-item.component';
+import { ApartmentDetailsComponent } from './apartment-details/apartment-details.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ApartmentItemComponent } from './apartment-item/apartment-item.componen
     LoginComponent,
     RegistrationComponent,
     ApartmentListComponent,
-    ApartmentItemComponent
+    ApartmentItemComponent,
+    ApartmentDetailsComponent
   ],
   imports: [
     BrowserModule,
