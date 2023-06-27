@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="logo">Apartment Rental Service</div>
+  <div class="button-container">
+    <button *ngIf="isLoggedIn" class="btn btn-primary button-small" (click)="showUserReservations()">
+      {{ isShowUserReservations ? 'Apartments' : 'Reservations' }}
+    </button>
+    <button *ngIf="!isLoggedIn" class="register-button button-small" routerLink="/registration">Register</button>
+    <button *ngIf="isLoggedIn; else loginButton" class="logout-button button-small" (click)="logout()">Logout</button>
+    <ng-template #loginButton>
+      <button class="login-button button-small" routerLink="/login">Login</button>
+    </ng-template>
+  </div>
+</div>
