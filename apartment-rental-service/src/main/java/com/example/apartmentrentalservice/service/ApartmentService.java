@@ -1,6 +1,7 @@
 package com.example.apartmentrentalservice.service;
 
 import com.example.apartmentrentalservice.dto.ApartmentDTO;
+import com.example.apartmentrentalservice.exception.ApartmentNotFoundException;
 import com.example.apartmentrentalservice.model.Apartment;
 import com.example.apartmentrentalservice.repository.ApartmentRepository;
 import org.springframework.stereotype.Service;

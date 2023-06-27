@@ -1,6 +1,7 @@
 package com.example.apartmentrentalservice.service;
 
 import com.example.apartmentrentalservice.dto.ReservationDTO;
+import com.example.apartmentrentalservice.exception.ReservationNotFoundException;
 import com.example.apartmentrentalservice.model.Reservation;
 import com.example.apartmentrentalservice.repository.ApartmentRepository;
 import com.example.apartmentrentalservice.repository.ReservationRepository;
