@@ -1,26 +1,26 @@
 package com.example.apartmentrentalservice.controller;
 
+import com.example.apartmentrentalservice.client.NotificationClient;
+import com.example.apartmentrentalservice.dto.NotificationDTO;
 import com.example.apartmentrentalservice.dto.ReservationDTO;
 import com.example.apartmentrentalservice.model.Reservation;
 import com.example.apartmentrentalservice.service.ReservationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
-@CrossOrigin(origins = "http://localhost:4200")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class ReservationController {
 
     private final ReservationService reservationService;
-
-    @Autowired
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
+    private final NotificationClient notificationClient;
 
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getAllReservations() {
@@ -68,6 +68,16 @@ public class ReservationController {
         }
 
         Reservation savedReservation = reservationService.createReservation(reservation);
+
+        NotificationDTO notificationDTO = new NotificationDTO();
+        notificationDTO.setRecipient(savedReservation.getGuestEmail());
+        notificationDTO.setTitle("Potwierdzenie utworzenia rezerwacji");
+        notificationDTO.setContent("Twoja rezerwacja o ID " + savedReservation.getId() + " została pomyślnie utworzona.");
+
+        notificationClient.sendNotification(notificationDTO);
+        notificationClient.processNotification(notificationDTO);
+        //notificationClient.scheduleNotification(notificationDTO, LocalDateTime.now().plusHours(1).toString());
+
         ReservationDTO savedReservationDTO = reservationService.convertToDTO(savedReservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReservationDTO);
     }
@@ -86,6 +96,16 @@ public class ReservationController {
             }
 
             Reservation savedReservation = reservationService.updateReservation(id, reservationToUpdate);
+
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setRecipient(savedReservation.getGuestEmail());
+            notificationDTO.setTitle("Aktualizacja rezerwacji");
+            notificationDTO.setContent("Twoja rezerwacja o ID " + savedReservation.getId() + " została zaktualizowana.");
+
+            notificationClient.sendNotification(notificationDTO);
+            notificationClient.processNotification(notificationDTO);
+            //notificationClient.scheduleNotification(notificationDTO, LocalDateTime.now().plusHours(1).toString());
+
             ReservationDTO savedReservationDTO = reservationService.convertToDTO(savedReservation);
             return ResponseEntity.ok(savedReservationDTO);
         } else {
@@ -99,6 +119,16 @@ public class ReservationController {
 
         if (existingReservation != null) {
             reservationService.deleteReservation(id);
+
+            NotificationDTO notificationDTO = new NotificationDTO();
+            notificationDTO.setRecipient(existingReservation.getGuestEmail());;
+            notificationDTO.setTitle("Usunięcie rezerwacji");
+            notificationDTO.setContent("Twoja rezerwacja o ID " + id + " została usunięta.");
+
+            notificationClient.sendNotification(notificationDTO);
+            notificationClient.processNotification(notificationDTO);
+            notificationClient.scheduleNotification(notificationDTO, LocalDateTime.now().plusHours(1).toString());
+
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
