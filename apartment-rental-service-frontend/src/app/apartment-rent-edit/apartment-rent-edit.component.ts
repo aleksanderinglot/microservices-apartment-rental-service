@@ -41,14 +41,28 @@ export class ApartmentRentEditComponent implements OnInit {
   }
 
   updateReservation(): void {
-    if (!this.reservation.guestName || !this.reservation.startDate || !this.reservation.endDate) {
-      alert('Please fill in all the fields.');
-      return;
+      if (!this.reservation.guestName || !this.reservation.startDate || !this.reservation.endDate) {
+        alert('Please fill in all the fields.');
+        return;
+      }
+
+      let validationError = false;
+      const currentDate = new Date();
+      const startDate = new Date(this.reservation.startDate);
+
+      if (this.reservation.startDate > this.reservation.endDate) {
+        validationError = true;
+      }
+
+      if (startDate.getTime() < currentDate.getTime()) {
+        validationError = true;
+      }
+
+      if (!validationError) {
+        this.apartmentService.updateReservation(this.reservationId, this.reservation)
+        .subscribe(() => {
+          this.router.navigate(['/user-reservations']);
+        });
+      }
     }
-    
-    this.apartmentService.updateReservation(this.reservationId, this.reservation)
-      .subscribe(() => {
-        this.router.navigate(['/user-reservations']);
-      });
-  }
 }

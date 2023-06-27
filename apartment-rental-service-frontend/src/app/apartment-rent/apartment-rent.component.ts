@@ -40,7 +40,7 @@ export class ApartmentRentComponent implements OnInit {
       this.initReservation();
     }
   }
-  
+
   getReservation(reservationId: number): void {
     this.apartmentService.getReservationById(reservationId)
       .subscribe(
@@ -51,7 +51,7 @@ export class ApartmentRentComponent implements OnInit {
           console.log('Error:', error);
         }
       );
-  }  
+  }
 
   getApartmentIdFromRoute(): void {
     this.apartmentId = Number(this.route.snapshot.paramMap.get('id'));
@@ -68,30 +68,38 @@ export class ApartmentRentComponent implements OnInit {
   }
 
   rentApartment(): void {
-    if (!this.reservation.guestName || !this.reservation.startDate || !this.reservation.endDate) {
-      alert('Please fill in all the fields.');
-      return;
-    }
+      if (!this.reservation.guestName || !this.reservation.startDate || !this.reservation.endDate) {
+        alert('Please fill in all the fields.');
+        return;
+      }
 
-    this.reservation.guestEmail = this.authService.getUsername();
-    let validationError = false;
-  
-    if (this.reservation.startDate > this.reservation.endDate) {
-      validationError = true;
+      this.reservation.guestEmail = this.authService.getUsername();
+      let validationError = false;
+
+      const currentDate = new Date();
+      const currentDateFormatted = currentDate.toISOString().split('T')[0];
+      const startDate = new Date(this.reservation.startDate);
+
+      if (this.reservation.startDate > this.reservation.endDate) {
+        validationError = true;
+      }
+
+      if (startDate.getTime() < currentDate.getTime()) {
+        validationError = true;
+      }
+
+      if (!validationError) {
+        this.apartmentService.createReservation(this.reservation)
+          .subscribe({
+            next: () => {
+              this.router.navigate(['/apartments']);
+            },
+            error: (error) => {
+              this.apartmentAlreadyBooked = true;
+            }
+          });
+      } else {
+        this.apartmentAlreadyBooked = false;
+      }
     }
-  
-    if (!validationError) {
-      this.apartmentService.createReservation(this.reservation)
-        .subscribe({
-          next: () => {
-            this.router.navigate(['/apartments']);
-          },
-          error: (error) => {
-            this.apartmentAlreadyBooked = true;
-          }
-        });
-    } else {
-      this.apartmentAlreadyBooked = false;
-    }
-  }  
 }

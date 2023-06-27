@@ -9,8 +9,8 @@ import { Reservation } from './reservation.model';
   providedIn: 'root'
 })
 export class ApartmentService {
-  private apartmentsUrl = 'http://localhost:8080/api/apartments';
-  private reservationsUrl = 'http://localhost:8080/api/reservations';
+  private apartmentsUrl = 'http://localhost:8060/api/apartments';
+  private reservationsUrl = 'http://localhost:8060/api/reservations';
 
   constructor(private http: HttpClient) { }
 

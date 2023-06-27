@@ -1,0 +1,11 @@
+:host {
+    display: block;
+    background-color: #d1dfff;
+    height: 100vh;
+  }
+  
+  .welcome-heading {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
