@@ -1,0 +1,79 @@
+version: '3'
+services:
+  apartment-rental-service:
+    container_name: apartment-rental-service
+    build:
+      context: ./apartment-rental-service
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/rental_service
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - database-rental-service
+
+  config-server:
+    container_name: apartment-rental-service-config-server
+    build:
+      context: ./apartment-rental-service-config-server
+      dockerfile: Dockerfile
+    ports:
+      - 8030:8030
+
+  discovery:
+    container_name: apartment-rental-service-discovery
+    build:
+      context: ./apartment-rental-service-discovery
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+
+  gateway:
+    container_name: apartment-rental-service-gateway
+    build:
+      context: ./apartment-rental-service-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 8050:8050
+
+  notification:
+    container_name: apartment-rental-service-notification
+    build:
+      context: ./apartment-rental-service-notification
+      dockerfile: Dockerfile
+    ports:
+      - 8070:8070
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3307/notification
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - database-notification
+
+  frontend:
+    container_name: apartment-rental-service-frontend
+    build:
+      context: ./apartment-rental-service-frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+
+  database-rental-service:
+    container_name: database-rental-service
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=rental_service
+
+  database-notification:
+    container_name: database-notification
+    image: mysql:latest
+    ports:
+      - 3308:3307
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=notification
