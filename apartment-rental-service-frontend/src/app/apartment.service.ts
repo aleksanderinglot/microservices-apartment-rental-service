@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Apartment } from './apartment.model';
-import { Reservation } from '../reservation.model';
+import { Reservation } from './reservation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +56,7 @@ export class ApartmentService {
     const url = `${this.reservationsUrl}/${reservationId}`;
     const headers = this.getAuthHeaders();
     return this.http.get<Reservation>(url, { headers });
-  }  
+  }
 
   updateReservation(reservationId: number, reservation: Reservation): Observable<Reservation> {
     const url = `${this.reservationsUrl}/${reservationId}`;
@@ -80,7 +80,7 @@ export class ApartmentService {
     const headers = this.getAuthHeaders();
     return this.http.get<Reservation[]>(url, { headers });
   }
-  
+
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
     if (token) {
