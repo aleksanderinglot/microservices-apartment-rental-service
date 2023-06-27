@@ -1,0 +1,34 @@
+<h5>Apartments List</h5>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th class="center">Name</th>
+      <th class="center">Address</th>
+      <th class="center">Number of Rooms</th>
+      <th class="center">Price</th>
+      <th class="center">Details</th>
+      <th class="center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let apartment of apartments">
+      <td class="center">{{ apartment.name }}</td>
+      <td class="center">{{ apartment.address }}</td>
+      <td class="center">{{ apartment.numberOfRooms }}</td>
+      <td class="center">{{ apartment.price }}</td>
+      <td class="center">
+        <button class="btn btn-primary button-small" (click)="goToApartmentDetails(apartment.id)">
+          View Details
+        </button>
+      </td>
+      <td class="center">
+        <button class="btn btn-primary button-small" (click)="goToApartmentRent(apartment.id)">
+          Rent Apartment
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-primary button-small" *ngIf="isAdmin" (click)="addApartment()">Add Apartment</button>

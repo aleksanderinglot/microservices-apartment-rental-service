@@ -9,13 +9,15 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
+import { ApartmentListComponent } from './apartment-list/apartment-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    ApartmentListComponent
   ],
   imports: [
     BrowserModule,
