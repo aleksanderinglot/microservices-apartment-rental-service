@@ -12,6 +12,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { ApartmentListComponent } from './apartment-list/apartment-list.component';
 import { ApartmentItemComponent } from './apartment-item/apartment-item.component';
 import { ApartmentDetailsComponent } from './apartment-details/apartment-details.component';
+import { ApartmentRentComponent } from './apartment-rent/apartment-rent.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ApartmentDetailsComponent } from './apartment-details/apartment-details
     RegistrationComponent,
     ApartmentListComponent,
     ApartmentItemComponent,
-    ApartmentDetailsComponent
+    ApartmentDetailsComponent,
+    ApartmentRentComponent
   ],
   imports: [
     BrowserModule,
