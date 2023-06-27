@@ -105,7 +105,6 @@ public class ReservationService {
         return false;
     }
 
-
     public boolean checkReservationOverlapForUpdate(Reservation reservationToUpdate) {
         List<Reservation> existingReservations = reservationRepository.findByApartmentIdAndIdNot(reservationToUpdate.getApartmentId(), reservationToUpdate.getId());
 
