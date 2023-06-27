@@ -6,6 +6,7 @@ import com.example.apartmentrentalservice.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/apartments")
 @CrossOrigin(origins = "*")
+@PreAuthorize("hasRole('ADMIN')")
 public class ApartmentController {
 
     private final ApartmentService apartmentService;
@@ -23,6 +25,7 @@ public class ApartmentController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<List<ApartmentDTO>> getAllApartments() {
         List<Apartment> apartments = apartmentService.getAllApartments();
 
@@ -35,6 +38,7 @@ public class ApartmentController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<ApartmentDTO> getApartmentById(@PathVariable Long id) {
         Apartment apartment = apartmentService.getApartmentById(id);
 
@@ -47,6 +51,7 @@ public class ApartmentController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('admin:create')")
     public ResponseEntity<ApartmentDTO> createApartment(@RequestBody ApartmentDTO apartmentDTO) {
         Apartment apartment = apartmentService.convertToEntity(apartmentDTO);
         Apartment savedApartment = apartmentService.createApartment(apartment);
@@ -56,6 +61,7 @@ public class ApartmentController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin:update')")
     public ResponseEntity<ApartmentDTO> updateApartment(@PathVariable Long id, @RequestBody ApartmentDTO apartmentDTO) {
         Apartment existingApartment = apartmentService.getApartmentById(id);
 
@@ -73,6 +79,7 @@ public class ApartmentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('admin:delete')")
     public ResponseEntity<Void> deleteApartment(@PathVariable Long id) {
         Apartment existingApartment = apartmentService.getApartmentById(id);
 
