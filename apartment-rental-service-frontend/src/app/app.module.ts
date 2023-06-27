@@ -14,6 +14,7 @@ import { ApartmentItemComponent } from './apartment-item/apartment-item.componen
 import { ApartmentDetailsComponent } from './apartment-details/apartment-details.component';
 import { ApartmentRentComponent } from './apartment-rent/apartment-rent.component';
 import { ApartmentRentEditComponent } from './apartment-rent-edit/apartment-rent-edit.component';
+import { ApartmentFormComponent } from './apartment-form/apartment-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ApartmentRentEditComponent } from './apartment-rent-edit/apartment-rent
     ApartmentItemComponent,
     ApartmentDetailsComponent,
     ApartmentRentComponent,
-    ApartmentRentEditComponent
+    ApartmentRentEditComponent,
+    ApartmentFormComponent
   ],
   imports: [
     BrowserModule,
