@@ -22,6 +22,11 @@ It also contains a separate microservice to send notification emails.
 - Angular (front-end part)
 - Docker / Docker Compose
 
+## Note
+
+The Dockerfile and docker-compose.yml files provided in this repository are currently intended for demonstration purposes only. 
+I am actively working on improving them to ensure reliability. They are subject to changes and improvements in the future.
+
 ## Screenshots
 
 <div>
