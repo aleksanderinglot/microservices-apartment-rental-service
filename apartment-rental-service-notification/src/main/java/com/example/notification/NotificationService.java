@@ -1,6 +1,7 @@
 package com.example.notification;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +20,9 @@ public class NotificationService {
     private final JavaMailSender mailSender;
     private final NotificationRepository notificationRepository;
 
+    @Value("${MAIL_USERNAME}")
+    private String mailSenderAddress;
+
     @Async
     public CompletableFuture<Boolean> sendNotification(Notification notification) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
@@ -31,7 +35,7 @@ public class NotificationService {
 
             //set email address to send notifications!!!
             //and configure host, port, username and password in application.properties file!!!
-            message.setFrom("");
+            message.setFrom(mailSenderAddress);
             mailSender.send(message);
             future.complete(true);
         } catch (Exception e) {
